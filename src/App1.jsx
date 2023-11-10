@@ -1,0 +1,47 @@
+import { useState } from "react";
+import { useEffect } from "react";
+
+const minhaLista = [
+  { id: '1', value: 'Fruta' },
+  { id: '2', value: 'Legume' },
+  { id: '3', value: 'Carne' },
+]
+
+function App() {
+  const [produtos, setProdutos] = useState(minhaLista);
+  const [pesquisa, setPesquisa] = useState('');
+
+  useEffect(
+    () => {
+      if (pesquisa){
+      const novaLista = minhaLista.filter((item) => {
+        return item.value.toLowerCase().includes(pesquisa.toLowerCase())
+      })
+      setProdutos(novaLista)
+    }else {
+      setProdutos(minhaLista)
+    }
+    }
+    , [pesquisa]
+  )
+
+  return (
+    <div>
+      <h1>Efeitos Colaterais</h1>
+      <input
+        value={pesquisa} onChange={(e) => setPesquisa(e.target.value)}
+        placeholder="Digite aqui"></input>
+      {produtos.map((item) => {
+        return (
+          <div key={item.id}>
+            <h3>{item.value}</h3>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+export default App
+
+
